@@ -1,8 +1,11 @@
 import "./global.css"
-import { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import React, { useEffect } from 'react';
 import { setupDatabase } from './src/database/setup';
 import { testesDb } from "./src/database/testesDb";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Login } from './src/views/Login';
+import { Menu } from './src/views/Menu';
 
 export default function App() {
   useEffect(() => {
@@ -10,10 +13,14 @@ export default function App() {
     testesDb();
   }, []);
 
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View className="flex-1 bg-white items-center justify-center">
-      <Text className='text-2xl font-bold text-red-500'>Seja bem-vindo ao app de compras!</Text>
-      <Text>oioioioioioioioioioi</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+        <Stack.Screen name="Menu" component={Menu} options={{title: "Olá, {Adicionar nome}"}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
