@@ -1,8 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
+import "./global.css"
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { setupDatabase } from './database/setup';
-import { testesDb } from "./database/testesDb"
+import { Text, View } from 'react-native';
+import { setupDatabase } from './src/database/setup';
+import { testesDb } from "./src/database/testesDb";
 
 export default function App() {
   useEffect(() => {
@@ -11,18 +11,9 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Seja bem-vindo ao app de registos de compras!</Text>
-      <StatusBar style="auto" />
+    <View className="flex-1 bg-white items-center justify-center">
+      <Text className='text-2xl font-bold text-red-500'>Seja bem-vindo ao app de compras!</Text>
+      <Text>oioioioioioioioioioi</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
