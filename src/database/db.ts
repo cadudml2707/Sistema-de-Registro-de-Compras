@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 import { drizzle } from "drizzle-orm/expo-sqlite";
-import { usuarios, compras } from "./schema";
+import { usuarios, compras } from "../models/schema";
 
 const expoDb = SQLite.openDatabaseSync("app.db");
 
