@@ -9,4 +9,4 @@ export const usuarios = sqliteTable("usuarios", {
     email: text("email").primaryKey(),
     senha: text("senha").notNull(),
     nome: text("nome").notNull(),
-})
+});

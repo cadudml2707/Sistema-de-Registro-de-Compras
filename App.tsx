@@ -4,14 +4,22 @@ import { setupDatabase } from './src/database/setup';
 import { testesDb } from "./src/database/testesDb";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login } from './src/views/Login';
+import { Login } from './src/views/loginScreen';
 import { Menu } from './src/views/Menu';
 
 export default function App() {
   useEffect(() => {
-    setupDatabase();
-    testesDb();
-  }, []);
+  const initDB = async () => {
+    try {
+      await setupDatabase();
+      await testesDb();
+    } catch (error) {
+      console.error("Falha na inicialização do DB:", error);
+    }
+  };
+  
+  initDB();
+}, []);
 
   const Stack = createNativeStackNavigator();
 
