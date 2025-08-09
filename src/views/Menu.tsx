@@ -3,7 +3,11 @@ import { CardPagos } from '../components/cardPagos';
 import { CardPendentes } from '../components/cardPendentes';
 import { ListaCompras } from '../components/listaCompras';
 
-export function Menu() {
+export function Menu({ navigation }: any) {
+
+  function handleCadastro(){
+        navigation.navigate("Cadastro");
+    }
 
   return (
     <View className='flex-1'>
@@ -24,6 +28,7 @@ export function Menu() {
       </ScrollView>
       <View className="p-6 bg-[#141416]">
             <TouchableOpacity
+            onPress={() => handleCadastro()}
               className="items-center justify-center h-16 rounded-xl bg-[#13C782]"
             >
               <Text className="text-white text-center font-semibold">Compra nova</Text>

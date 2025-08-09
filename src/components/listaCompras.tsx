@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-export function ListaCompras({ navigation }: any) {
+export function ListaCompras() {
 
     const [aba, setAba] = useState(1);
 
@@ -21,10 +21,6 @@ export function ListaCompras({ navigation }: any) {
                 setAba(4);
                 break;
         }
-    }
-
-    function handleCompraNova(){
-        navigation.navigate("CompraNova");
     }
 
     return (

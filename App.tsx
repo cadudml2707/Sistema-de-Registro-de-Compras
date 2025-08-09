@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './src/views/loginScreen';
 import { Menu } from './src/views/Menu';
+import { Cadastro } from "./src/views/cadastro";
 
 export default function App() {
   useEffect(() => {
@@ -25,17 +26,21 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Menu">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen
           name="Menu"
           component={Menu}
-          options={{ 
-            title: "Olá, {Adicionar nome}", 
+          options={{
+            title: "Olá, {Adicionar nome}",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
             headerBackVisible: false,
           }} />
+        <Stack.Screen name="Cadastro" component={Cadastro} options={{
+          headerStyle: { backgroundColor: "#141416" },
+          headerTintColor: '#fff',
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
