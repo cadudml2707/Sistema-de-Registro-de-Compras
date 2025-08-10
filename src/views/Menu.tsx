@@ -23,7 +23,7 @@ export function Menu({ navigation }: any) {
             </View>
           </View>
           <Text className='text-2xl font-bold text-red-500 color-white mt-4'>Lista de Compras</Text>
-          <ListaCompras />
+          <ListaCompras navigation={navigation}/>
         </View>
       </ScrollView>
       <View className="p-6 bg-[#141416]">

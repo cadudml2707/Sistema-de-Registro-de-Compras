@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './src/views/loginScreen';
 import { Menu } from './src/views/Menu';
 import { Cadastro } from "./src/views/cadastro";
+import {Visualizar } from "./src/views/visualizar";
 
 export default function App() {
   useEffect(() => {
@@ -38,6 +39,10 @@ export default function App() {
             headerBackVisible: false,
           }} />
         <Stack.Screen name="Cadastro" component={Cadastro} options={{
+          headerStyle: { backgroundColor: "#141416" },
+          headerTintColor: '#fff',
+        }} />
+        <Stack.Screen name="Visualizar" component={Visualizar} options={{
           headerStyle: { backgroundColor: "#141416" },
           headerTintColor: '#fff',
         }} />

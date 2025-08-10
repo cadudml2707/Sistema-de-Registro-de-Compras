@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import { Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid } from 'react-native';
 import { useState } from 'react';
 import { formularioValidacao } from '../viewmodels/formularioViewModel';
 import { cadastraCompra } from '../models/formularioModel';
@@ -25,7 +25,9 @@ export function Cadastro({ navigation }: any) {
 
     const onSubmit = async (data: any) => {
         await cadastraCompra(data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status); 
+        ToastAndroid.show("Compra cadastrada com sucesso!", ToastAndroid.SHORT);
         navigation.navigate("Menu");
+
     }
 
     const [status, setStatus] = useState(0);

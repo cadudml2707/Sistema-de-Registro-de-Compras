@@ -7,7 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 
-export function Editar({ route }: any) {
+export function Visualizar({ route }: any) {
 
     const navigation = useNavigation();
     const compra_id = route.params?.compra_id;
@@ -122,6 +122,13 @@ export function Editar({ route }: any) {
                         className="flex-1 items-center justify-center h-16 rounded-xl bg-[#13C782]"
                     >
                         <Text className="text-white text-center font-semibold">Editar</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => handleExcluir(compra.id)}
+                        className="flex-1 items-center justify-center h-16 rounded-xl bg-[#FB4646]"
+                    >
+                        <Text className="text-white text-center font-semibold">Excluir</Text>
                     </TouchableOpacity>
                 </View>
             </View>

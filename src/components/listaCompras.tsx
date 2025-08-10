@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity } from 'react-native';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { mostraCompras } from "../models/formularioModel";
 import { CardInfo } from "./cardInfo";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React from "react";
 
-export function ListaCompras({ navigation }: any) {
+export function ListaCompras({ navigation }: { navigation: any }) {
 
     const [compras, setCompras] = useState<any[]>([]);
 
-    useEffect(() => {
+    useFocusEffect(
+    React.useCallback(() => {
         async function pegaCompras() {
             const resultado = await mostraCompras();
             setCompras(resultado);
         }
         pegaCompras();
-    }, []);
+    }, [])
+);
 
     const [aba, setAba] = useState(1);
 
@@ -22,8 +25,8 @@ export function ListaCompras({ navigation }: any) {
         setAba(cor);
     }
 
-    function handleEditar(){
-        navigation.navigate("Editar");
+    function handleVisualizar(compra_id: any) { 
+        navigation.navigate("Visualizar", { compra_id });
     }
 
     if (compras.length === 0) {
@@ -73,6 +76,7 @@ export function ListaCompras({ navigation }: any) {
                                 preco={compra.preco}
                                 dataVencimento={compra.dataVencimento}
                                 status={compra.status}
+                                onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
                             />
                         ))}
                         <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
@@ -86,13 +90,14 @@ export function ListaCompras({ navigation }: any) {
                         <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
                         {compras.map((compra) => (
                             compra.status === 1 && (
-                                <CardInfo 
-                                key={compra.id}
-                                nome={compra.nome}
-                                preco={compra.preco}
-                                dataVencimento={compra.dataVencimento}
-                                status={compra.status}
-                            />
+                                <CardInfo
+                                    key={compra.id}
+                                    nome={compra.nome}
+                                    preco={compra.preco}
+                                    dataVencimento={compra.dataVencimento}
+                                    status={compra.status}
+                                    onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
+                                />
                             )
                         ))}
                         {compras.map((compra) => (
@@ -107,13 +112,14 @@ export function ListaCompras({ navigation }: any) {
                         <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
                         {compras.map((compra) => (
                             compra.status === 3 && (
-                                <CardInfo 
-                                key={compra.id}
-                                nome={compra.nome}
-                                preco={compra.preco}
-                                dataVencimento={compra.dataVencimento}
-                                status={compra.status}
-                            />
+                                <CardInfo
+                                    key={compra.id}
+                                    nome={compra.nome}
+                                    preco={compra.preco}
+                                    dataVencimento={compra.dataVencimento}
+                                    status={compra.status}
+                                    onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
+                                />
                             )
                         ))}
                         {compras.map((compra) => (
@@ -128,13 +134,14 @@ export function ListaCompras({ navigation }: any) {
                         <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
                         {compras.map((compra) => (
                             compra.status === 2 && (
-                                <CardInfo 
-                                key={compra.id}
-                                nome={compra.nome}
-                                preco={compra.preco}
-                                dataVencimento={compra.dataVencimento}
-                                status={compra.status}
-                            />
+                                <CardInfo
+                                    key={compra.id}
+                                    nome={compra.nome}
+                                    preco={compra.preco}
+                                    dataVencimento={compra.dataVencimento}
+                                    status={compra.status}
+                                    onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
+                                />
                             )
                         ))}
                         {compras.map((compra) => (

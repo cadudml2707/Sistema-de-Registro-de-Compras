@@ -63,6 +63,21 @@ export async function mostraCompras() {
     }
 }
 
+export async function mostraCompra(id: number) {
+    try {
+        console.log(`Buscando compra com ID: ${id}`);
+        const resultado = await db.select()
+            .from(compras)
+            .where(eq(compras.id, id))
+            .get();
+        console.log("Resultado da query:", resultado);
+        return resultado
+    } catch (error) {
+        console.error("Erro ao buscar compras:", error);
+        throw error;
+    }
+}
+
 export async function excluiCompra(id: number) {
     try {
         await db.delete(compras).where(eq(compras.id, id)).run();

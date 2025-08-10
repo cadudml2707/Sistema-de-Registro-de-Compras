@@ -1,7 +1,7 @@
 import { openDatabaseSync, deleteDatabaseSync } from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 
-export function setupDatabase() {
+export async function setupDatabase() {
     try {
 
         const db = openDatabaseSync('app.db');
