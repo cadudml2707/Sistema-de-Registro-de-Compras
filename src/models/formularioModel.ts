@@ -49,8 +49,13 @@ export async function atualizaCompra(
             })
             .where(eq(compras.id, id))
             .run();
-            console.log("Nome no banco: ", nome)
             console.log("Id no banco: ", id)
+            console.log("Nome no banco: ", nome)
+            console.log("Descricao no banco: ", descricao)
+            console.log("Preçco no banco: ", preco)
+            console.log("Compra no banco: ", dataCompra)
+            console.log("Vencimento no banco: ", dataVencimento)
+            console.log("Status no banco: ", status)
     } catch (error) {
         console.error("Erro ao atualizar compra:", error);
         throw error;
