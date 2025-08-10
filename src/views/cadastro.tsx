@@ -2,13 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useState } from 'react';
-import { formularioValidacao } from '../models/formularioValidacaao';
+import { formularioValidacao } from '../viewmodels/formularioViewModel';
+import { cadastraCompra } from '../models/formularioModel';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-export function Cadastro() {
+export function Cadastro({ navigation }: any) {
 
     const {
         control,
@@ -23,7 +24,8 @@ export function Cadastro() {
     });
 
     const onSubmit = async (data: any) => {
-
+        await cadastraCompra(data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status); 
+        navigation.navigate("Menu");
     }
 
     const [status, setStatus] = useState(0);

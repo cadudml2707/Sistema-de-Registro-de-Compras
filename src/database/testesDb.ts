@@ -1,13 +1,20 @@
 import { db } from "./db";
 import { usuarios } from "../models/schema";
+import { eq } from "drizzle-orm";
 
 export async function testesDb() {
-  await db.insert(usuarios).values({
-    email: "defesa.adm@gmail.com",
-    senha: "1234",
-    nome: "Defesa Civil"
-  });
+  const email = "defesacivil@gmail.com";
 
-  const results = await db.select().from(usuarios).all();
-  console.log(results);
+  const existeEmail = await db.select().from(usuarios).where(eq(usuarios.email, email)).get();
+
+  if (!existeEmail) {
+    await db.insert(usuarios).values({
+      email: email,
+      senha: "1234", 
+      nome: "Defesa Civil"
+    });
+    console.log("Usuário criado com sucesso!");
+  } else {
+    console.log("Usuário já existe:");
+  }
 }
