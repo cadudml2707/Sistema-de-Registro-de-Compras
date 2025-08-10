@@ -8,6 +8,7 @@ import { Login } from './src/views/loginScreen';
 import { Menu } from './src/views/Menu';
 import { Cadastro } from "./src/views/cadastro";
 import {Visualizar } from "./src/views/visualizar";
+import { Editar } from "./src/views/editar";
 
 export default function App() {
   useEffect(() => {
@@ -43,6 +44,10 @@ export default function App() {
           headerTintColor: '#fff',
         }} />
         <Stack.Screen name="Visualizar" component={Visualizar} options={{
+          headerStyle: { backgroundColor: "#141416" },
+          headerTintColor: '#fff',
+        }} />
+        <Stack.Screen name="Editar" component={Editar} options={{
           headerStyle: { backgroundColor: "#141416" },
           headerTintColor: '#fff',
         }} />

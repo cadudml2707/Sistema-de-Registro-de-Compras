@@ -39,6 +39,7 @@ export async function atualizaCompra(
         await db
             .update(compras)
             .set({
+                id,
                 nome,
                 descricao,
                 preco,
@@ -48,6 +49,8 @@ export async function atualizaCompra(
             })
             .where(eq(compras.id, id))
             .run();
+            console.log("Nome no banco: ", nome)
+            console.log("Id no banco: ", id)
     } catch (error) {
         console.error("Erro ao atualizar compra:", error);
         throw error;

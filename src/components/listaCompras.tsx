@@ -10,23 +10,19 @@ export function ListaCompras({ navigation }: { navigation: any }) {
     const [compras, setCompras] = useState<any[]>([]);
 
     useFocusEffect(
-    React.useCallback(() => {
-        async function pegaCompras() {
-            const resultado = await mostraCompras();
-            setCompras(resultado);
-        }
-        pegaCompras();
-    }, [])
-);
+        React.useCallback(() => {
+            async function pegaCompras() {
+                const resultado = await mostraCompras();
+                setCompras(resultado);
+            }
+            pegaCompras();
+        }, [])
+    );
 
     const [aba, setAba] = useState(1);
 
     function handleMudarCor(cor: number) {
         setAba(cor);
-    }
-
-    function handleVisualizar(compra_id: any) { 
-        navigation.navigate("Visualizar", { compra_id });
     }
 
     if (compras.length === 0) {

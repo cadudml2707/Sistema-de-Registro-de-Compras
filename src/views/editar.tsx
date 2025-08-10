@@ -1,17 +1,38 @@
 import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Alert } from 'react-native';
 import { useEffect, useState } from 'react';
 import { mostraCompra, excluiCompra } from '../models/formularioModel';
+import { formularioValidacao } from '../viewmodels/formularioViewModel';
+import { atualizaCompra } from '../models/formularioModel';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
 
 export function Editar({ route }: any) {
 
     const navigation = useNavigation();
     const compra_id = route.params?.compra_id;
     const [compra, setCompra] = useState<any>(null);
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+        setValue,
+    } = useForm({
+        resolver: yupResolver(formularioValidacao),
+        defaultValues: {
+            nome: '',
+            descricao: '',
+            preco: '',
+            dataCompra: '',
+            dataVencimento: '',
+            status: 0,
+        }
+    });
 
     useEffect(() => {
         async function carregarDados() {
@@ -25,6 +46,32 @@ export function Editar({ route }: any) {
         carregarDados();
     }, [compra_id]);
 
+    useEffect(() => {
+        if (compra) {
+            setValue('nome', compra.nome);
+            setValue('descricao', compra.descricao);
+            setValue('preco', compra.preco);
+            setValue('dataCompra', compra.dataCompra);
+            setValue('dataVencimento', compra.dataVencimento);
+            setValue('status', compra.status);
+            setStatus(compra.status);
+        }
+    }, [compra, setValue])
+
+    const onSubmit = async (data: any) => {
+        await atualizaCompra(compra_id, data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status);
+        ToastAndroid.show("Compra atualizada com sucesso!", ToastAndroid.SHORT);
+        navigation.navigate("Menu");
+    }
+
+    const [status, setStatus] = useState(0);
+
+    function handleMudarCor(cor: number) {
+        setStatus(cor);
+        setValue('status', cor);
+    }
+
+
     if (!compra) {
         return (
             <View className="flex-1 bg-[#141416] justify-center items-center">
@@ -33,97 +80,164 @@ export function Editar({ route }: any) {
         );
     }
 
-    const statusText = compra.status === 1 ? 'Pago' :
-        compra.status === 2 ? 'Andamento' : 'Atrasado';
-    const statusColor = compra.status === 1 ? '#13C782' :
-        compra.status === 2 ? '#FFA500' : '#FB4646';
-
-    function handleExcluir(id: number) {
-        try {
-            Alert.alert(
-                "Confirmar Exclusão",
-                "Tem certeza que deseja excluir esta compra?",
-                [
-                    {
-                        text: "Cancelar",
-                        style: "cancel"
-                    },
-                    {
-                        text: "Excluir",
-                        onPress: async () => {
-                            try {
-                                await excluiCompra(id);
-                                ToastAndroid.show("Compra excluída com sucesso!", ToastAndroid.SHORT);
-                                navigation.goBack();
-                            } catch {
-                                alert("Erro! Tente novamente.");
-                            }
-                        }
-                    }
-                ]
-            )
-        } catch (error) {
-            console.error("Erro ao excluir:", error);
-            ToastAndroid.show("Erro ao excluir compra", ToastAndroid.SHORT);
-        }
-    }
-
     return (
         <ScrollView className='flex-1 bg-[#141416]'>
             <View className="flex-1 bg-[#141416] p-6 gap-6">
-                <Text className='text-2xl font-bold text-[#E0E0E0]'>{compra.nome}</Text>
+                <Text className='text-2xl font-bold color-[#E0E0E0]'>Editar Compra</Text>
                 <View>
-                    <Text className='text-[#E0E0E0]'>Nome do Produto</Text>
-                    <View className='bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6'>
-                        <Text className="flex-1 text-white p-4">{compra.nome}</Text>
-                        <Feather name="box" size={24} color="#999999" />
-                    </View>
+                    <Text className='color-[#E0E0E0]'>Nome do Produto</Text>
+                    <Controller
+                        control={control}
+                        name="nome"
+                        render={({ field: { onChange, value } }) => (
+                            <View className={`
+                                ${errors.nome ? 'border-red-500' : '#999999'}
+                            bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
+                                <TextInput
+                                    className="flex-1 text-white p-4"
+                                    placeholder="Nome do produto"
+                                    placeholderTextColor="#999999"
+                                    value={value}
+                                    onChangeText={onChange}
+                                />
+                                <Feather name="box" size={24} color={errors.nome ? '#ef4444' : '#999999'} />
+                            </View>
+                        )}
+                    />
+                    {errors.nome && (
+                        <Text className="text-red-500 mt-1">{errors.nome.message}</Text>
+                    )}
                 </View>
                 <View>
-                    <Text className='text-[#E0E0E0]'>Descrição do Produto</Text>
-                    <View className='bg-[#262429] border-b border-b-[#999999] mt-4 rounded-t-xl flex-row items-start h-24 pr-6'>
-                        <Text className="flex-1 text-white p-4">{compra.descricao}</Text>
-                        <Ionicons className='pt-4' name="chatbox-ellipses" size={24} color="#999999" />
-                    </View>
+                    <Text className='color-[#E0E0E0]'>Descrição do Produto</Text>
+                    <Controller
+                        control={control}
+                        name="descricao"
+                        render={({ field: { onChange, value } }) => (
+                            <View className={`
+                            ${errors.descricao ? 'border-red-500' : '#999999'}
+                            bg-[#262429] border-b border-b-[#999999] mt-4 rounded-t-xl flex-row items-start h-24 pr-6`}>
+                                <TextInput
+                                    className="flex-1 text-white p-4"
+                                    placeholder="Descrição"
+                                    placeholderTextColor="#999999"
+                                    value={value}
+                                    onChangeText={onChange}
+                                />
+                                <Ionicons className='pt-4' name="chatbox-ellipses" size={24} color={errors.descricao ? '#ef4444' : '#999999'} />
+                            </View>
+                        )}
+                    />
+                    {errors.descricao && (
+                        <Text className="text-red-500 mt-1">{errors.descricao.message}</Text>
+                    )}
                 </View>
                 <View>
-                    <Text className='text-[#E0E0E0]'>Preço do Produto</Text>
-                    <View className='bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6'>
-                        <Text className="flex-1 text-white p-4">{compra.preco}</Text>
-                        <MaterialIcons name="attach-money" size={24} color="#999999" />
-                    </View>
+                    <Text className='color-[#E0E0E0]'>Preço do Produto</Text>
+                    <Controller
+                        control={control}
+                        name="preco"
+                        render={({ field: { onChange, value } }) => (
+                            <View className={`
+                            ${errors.preco ? 'border-red-500' : '#999999'}
+                            bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
+                                <TextInput
+                                    className="flex-1 text-white p-4"
+                                    placeholder="Preço do produto"
+                                    placeholderTextColor="#999999"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    keyboardType='numeric'
+                                />
+                                <MaterialIcons name="attach-money" size={24} color={errors.preco ? '#ef4444' : '#999999'} />
+                            </View>
+                        )}
+                    />
+                    {errors.preco && (
+                        <Text className="text-red-500 mt-1">{errors.preco.message}</Text>
+                    )}
                 </View>
-                <Text className='text-2xl font-bold text-[#E0E0E0]'>Dados de Pagamento</Text>
+                <Text className='text-2xl font-bold color-[#E0E0E0]'>Dados de Pagamento</Text>
                 <View>
-                    <Text className='text-[#E0E0E0]'>Data da Compra</Text>
-                    <View className='bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6'>
-                        <Text className="flex-1 text-white p-4">{compra.dataCompra}</Text>
-                        <Ionicons name="calendar-clear" size={24} color="#999999" />
-                    </View>
+                    <Text className='color-[#E0E0E0]'>Data da Compra</Text>
+                    <Controller
+                        control={control}
+                        name="dataCompra"
+                        render={({ field: { onChange, value } }) => (
+                            <View className={`
+                            ${errors.dataCompra ? 'border-red-500' : '#999999'}
+                            bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
+                                <TextInput
+                                    className="flex-1 text-white p-4"
+                                    placeholder="DD/MM/AA"
+                                    placeholderTextColor="#999999"
+                                    value={value}
+                                    onChangeText={onChange}
+                                />
+                                <Ionicons name="calendar-clear" size={24} color={errors.dataCompra ? '#ef4444' : '#999999'} />
+                            </View>
+                        )}
+                    />
+                    {errors.dataCompra && (
+                        <Text className="text-red-500 mt-1">{errors.dataCompra.message}</Text>
+                    )}
                 </View>
                 <View>
-                    <Text className='text-[#E0E0E0]'>Data de Vencimento</Text>
-                    <View className='bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6'>
-                        <Text className="flex-1 text-white p-4">{compra.dataVencimento}</Text>
-                        <Ionicons name="calendar-clear" size={24} color="#999999" />
-                    </View>
+                    <Text className='color-[#E0E0E0]'>Data de Vencimento</Text>
+                    <Controller
+                        control={control}
+                        name="dataVencimento"
+                        render={({ field: { onChange, value } }) => (
+                            <View className={`
+                            ${errors.dataVencimento ? 'border-red-500' : '#999999'}
+                            bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
+                                <TextInput
+                                    className="flex-1 text-white p-4"
+                                    placeholder="DD/MM/AA"
+                                    placeholderTextColor="#999999"
+                                    value={value}
+                                    onChangeText={onChange}
+                                />
+                                <Ionicons name="calendar-clear" size={24} color={errors.dataVencimento ? '#ef4444' : '#999999'} />
+                            </View>
+                        )}
+                    />
+                    {errors.dataVencimento && (
+                        <Text className="text-red-500 mt-1">{errors.dataVencimento.message}</Text>
+                    )}
                 </View>
-                <View>
-                    <Text className='text-2xl font-bold text-[#E0E0E0]'>Status</Text>
-                    <View className='bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6'>
-                        <Text className="flex-1 text-white p-4" style={{ color: statusColor }}>
-                            {statusText}
-                        </Text>
-                    </View>
-                </View>
-                <View className="flex-row gap-4">
+                <Text className='text-2xl font-bold color-[#E0E0E0]'>Status</Text>
+                <View className='flex-row justify-between'>
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate("Editar", { compraId: compra.id })}
-                        className="flex-1 items-center justify-center h-16 rounded-xl bg-[#13C782]"
-                    >
-                        <Text className="text-white text-center font-semibold">Editar</Text>
+                        onPress={() => handleMudarCor(1)}
+                        className={`${status === 1 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+                        <Text style={{ color: status === 1 ? '#13C782' : '#606061' }}>
+                            Pago
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleMudarCor(2)}
+                        className={`${status === 2 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+                        <Text style={{ color: status === 2 ? '#13C782' : '#606061' }}>
+                            Andamento
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleMudarCor(3)}
+                        className={`${status === 3 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+                        <Text style={{ color: status === 3 ? '#13C782' : '#606061' }}>
+                            Atrasado
+                        </Text>
                     </TouchableOpacity>
                 </View>
+                {errors.status && (
+                    <Text className="text-red-500 mt-1">{errors.status.message}</Text>
+                )}
+                <TouchableOpacity
+                    onPress={handleSubmit(onSubmit)}
+                    className=" items-center justify-center h-16 rounded-xl bg-[#13C782]">
+                    <Text className="text-white text-center font-semibold">Salvar</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     );

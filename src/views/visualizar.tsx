@@ -1,6 +1,7 @@
 import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Alert } from 'react-native';
 import { useEffect, useState } from 'react';
 import { mostraCompra, excluiCompra } from '../models/formularioModel';
+import { Editar } from './editar';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -68,6 +69,10 @@ export function Visualizar({ route }: any) {
         }
     }
 
+    function handleEditar(id: number){
+        
+    }
+
     return (
         <ScrollView className='flex-1 bg-[#141416]'>
             <View className="flex-1 bg-[#141416] p-6 gap-6">
@@ -118,7 +123,7 @@ export function Visualizar({ route }: any) {
                 </View>
                 <View className="flex-row gap-4">
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate("Editar", { compraId: compra.id })}
+                        onPress={() => navigation.navigate("Editar", {compra_id: compra.id})}
                         className="flex-1 items-center justify-center h-16 rounded-xl bg-[#13C782]"
                     >
                         <Text className="text-white text-center font-semibold">Editar</Text>
