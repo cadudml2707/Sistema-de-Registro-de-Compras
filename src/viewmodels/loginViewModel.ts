@@ -7,8 +7,8 @@ export async function validaUsuario(email: string, senha: string): Promise<boole
         .select()
         .from(usuarios)
         .where(eq(usuarios.email, email))
-        .get();  // Usando .get() para buscar apenas um registro
+        .get();  
 
-    if (!usuario) return false;  // Usuário não encontrado
-    return usuario.senha === senha;  // Comparação em texto puro (apenas para desafio)
+    if (!usuario) return false;  
+    return usuario.senha === senha; 
 }

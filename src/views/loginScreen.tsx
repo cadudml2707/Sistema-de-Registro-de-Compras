@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TouchableOpacity, Text, View, TextInput, ScrollView } from 'react-native';
 import { validaUsuario } from '../viewmodels/loginViewModel';
-import { loginValidacao } from '../models/loginValidacao';
+import { loginValidacao } from '../viewmodels/loginValidacao';
 
 export function Login({ navigation }: any) {
 
