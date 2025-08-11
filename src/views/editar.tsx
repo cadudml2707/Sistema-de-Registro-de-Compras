@@ -1,15 +1,21 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, Controller } from 'react-hook-form';
-import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid } from 'react-native';
-import { useState } from 'react';
+import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import { mostraCompra, excluiCompra } from '../models/formularioModel';
 import { formularioValidacao } from '../viewmodels/formularioViewModel';
-import { cadastraCompra } from '../models/formularioModel';
+import { atualizaCompra } from '../models/formularioModel';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
 
-export function Cadastro({ navigation }: any) {
+export function Editar({ route }: any) {
+
+    const navigation = useNavigation();
+    const compra_id = route.params?.compra_id;
+    const [compra, setCompra] = useState<any>(null);
 
     const {
         control,
@@ -19,13 +25,42 @@ export function Cadastro({ navigation }: any) {
     } = useForm({
         resolver: yupResolver(formularioValidacao),
         defaultValues: {
+            nome: '',
+            descricao: '',
+            preco: '',
+            dataCompra: '',
+            dataVencimento: '',
             status: 0,
         }
     });
 
+    useEffect(() => {
+        async function carregarDados() {
+            if (compra_id) {
+                console.log("Buscando compra ID:", compra_id);
+                const dados = await mostraCompra(compra_id);
+                console.log("Dados retornados:", dados);
+                setCompra(dados);
+            }
+        }
+        carregarDados();
+    }, [compra_id]);
+
+    useEffect(() => {
+        if (compra) {
+            setValue('nome', compra.nome);
+            setValue('descricao', compra.descricao);
+            setValue('preco', compra.preco);
+            setValue('dataCompra', compra.dataCompra);
+            setValue('dataVencimento', compra.dataVencimento);
+            setValue('status', compra.status);
+            setStatus(compra.status);
+        }
+    }, [compra, setValue])
+
     const onSubmit = async (data: any) => {
-        await cadastraCompra(data.nome, data.descricao, parseFloat(data.preco), data.dataCompra, data.dataVencimento, data.status);
-        ToastAndroid.show("Compra cadastrada com sucesso!", ToastAndroid.SHORT);
+        await atualizaCompra(compra_id, data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status);
+        ToastAndroid.show("Compra atualizada com sucesso!", ToastAndroid.SHORT);
         navigation.navigate("Menu");
     }
 
@@ -36,10 +71,19 @@ export function Cadastro({ navigation }: any) {
         setValue('status', cor);
     }
 
+
+    if (!compra) {
+        return (
+            <View className="flex-1 bg-[#141416] justify-center items-center">
+                <Text className="text-white">Carregando...</Text>
+            </View>
+        );
+    }
+
     return (
         <ScrollView className='flex-1 bg-[#141416]'>
             <View className="flex-1 bg-[#141416] p-6 gap-6">
-                <Text className='text-2xl font-bold color-[#E0E0E0]'>Registrar Nova Compra</Text>
+                <Text className='text-2xl font-bold color-[#E0E0E0]'>Editar Compra</Text>
                 <View>
                     <Text className='color-[#E0E0E0]'>Nome do Produto</Text>
                     <Controller
@@ -99,7 +143,7 @@ export function Cadastro({ navigation }: any) {
                             bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
                                 <TextInput
                                     className="flex-1 text-white p-4"
-                                    placeholder="Preço do produto (ex: 5.0)"
+                                    placeholder="Preço do produto"
                                     placeholderTextColor="#999999"
                                     value={value}
                                     onChangeText={(text) => {

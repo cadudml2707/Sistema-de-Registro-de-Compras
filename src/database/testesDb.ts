@@ -12,7 +12,7 @@ export async function testesDb() {
       email: email,
       senha: "1234", 
       nome: "Defesa Civil"
-    });
+    }).run();
     console.log("Usuário criado com sucesso!");
   } else {
     console.log("Usuário já existe:");
