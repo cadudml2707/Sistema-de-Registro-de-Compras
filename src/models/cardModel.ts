@@ -11,8 +11,6 @@ export async function comprasPagasPreco() {
         where(eq(compras.status, 1)).
         get();
 
-    console.log(resultado)
-
     return resultado?.total ?? 0;
 }
 
@@ -25,8 +23,6 @@ export async function comprasPendentesPreco() {
         where(eq(compras.status, 3)).
         get();
 
-    console.log(resultado)
-
     return resultado?.total ?? 0;
 }
 
@@ -37,8 +33,6 @@ export async function comprasPagasQtd() {
         where(eq(compras.status, 1)).
         get();
 
-    console.log(quantidade)
-
     return quantidade?.quantidade ?? 0;
 }
 
@@ -48,8 +42,6 @@ export async function comprasPendentesQtd() {
         from(compras).
         where(eq(compras.status, 3)).
         get();
-
-    console.log(quantidade)
 
     return quantidade?.quantidade ?? 0;
 }

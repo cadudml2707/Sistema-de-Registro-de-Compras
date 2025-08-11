@@ -1,5 +1,5 @@
 import { db } from "../database/db";
-import { usuarios } from "../models/schema";
+import { usuarios } from "./schema";
 import { eq } from "drizzle-orm";
 
 export async function validaUsuario(email: string, senha: string): Promise<boolean> {
@@ -11,4 +11,4 @@ export async function validaUsuario(email: string, senha: string): Promise<boole
 
     if (!usuario) return false;  
     return usuario.senha === senha; 
-}
+}  

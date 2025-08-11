@@ -1,9 +1,9 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TouchableOpacity, Text, View, TextInput, ScrollView } from 'react-native';
-import { validaUsuario } from '../viewmodels/loginViewModel';
-import { loginValidacao } from '../viewmodels/loginValidacao';
+import { TouchableOpacity, Text, View, TextInput } from 'react-native';
+import { validaUsuario } from '../models/loginModel';
+import { loginValidacao } from '../viewmodels/yup/loginValidacao';
 
 export function Login({ navigation }: any) {
 

@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
-import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid } from 'react-native';
-import { useState } from 'react';
-import { formularioValidacao } from '../viewmodels/formularioViewModel';
-import { cadastraCompra } from '../models/formularioModel';
+import { Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { formularioValidacao } from '../viewmodels/yup/formularioValidacao';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { cadastroViewModel } from '../viewmodels/cadastroViewModel';
 
 export function Cadastro({ navigation }: any) {
 
@@ -23,18 +22,7 @@ export function Cadastro({ navigation }: any) {
         }
     });
 
-    const onSubmit = async (data: any) => {
-        await cadastraCompra(data.nome, data.descricao, parseFloat(data.preco), data.dataCompra, data.dataVencimento, data.status);
-        ToastAndroid.show("Compra cadastrada com sucesso!", ToastAndroid.SHORT);
-        navigation.navigate("Menu");
-    }
-
-    const [status, setStatus] = useState(0);
-
-    function handleMudarCor(cor: number) {
-        setStatus(cor);
-        setValue('status', cor);
-    }
+    const { status, handleMudarCor, onSubmit } = cadastroViewModel({ navigation, setValue }); 
 
     return (
         <ScrollView className='flex-1 bg-[#141416]'>
