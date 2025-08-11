@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text, View, TouchableOpacity } from 'react-native';
 import { mostraCompras } from "../models/formularioModel";
 import { CardInfo } from "./cardInfo";

@@ -146,7 +146,10 @@ export function Editar({ route }: any) {
                                     placeholder="Preço do produto"
                                     placeholderTextColor="#999999"
                                     value={value}
-                                    onChangeText={onChange}
+                                    onChangeText={(text) => {
+                                        const cleaned = text.replace(/[^\d.]/g, '');
+                                        onChange(cleaned);
+                                    }}
                                     keyboardType='numeric'
                                 />
                                 <MaterialIcons name="attach-money" size={24} color={errors.preco ? '#ef4444' : '#999999'} />

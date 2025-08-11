@@ -11,14 +11,18 @@ export async function cadastraCompra(
     status: number) {
 
     try {
+
+        const precoNumerico = parseFloat(preco.toFixed(2));
+
         await db.insert(compras).values({
             nome,
             descricao,
-            preco,
+            preco: precoNumerico,
             dataCompra,
             dataVencimento,
             status,
         });
+        console.log("Compra cadastrada com valor:", precoNumerico, typeof precoNumerico);
         console.log("Compra cadastrada")
     } catch (error) {
         console.error("Erro ao cadastrar compra:", error);

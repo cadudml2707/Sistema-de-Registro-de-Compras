@@ -24,10 +24,9 @@ export function Cadastro({ navigation }: any) {
     });
 
     const onSubmit = async (data: any) => {
-        await cadastraCompra(data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status); 
+        await cadastraCompra(data.nome, data.descricao, parseFloat(data.preco), data.dataCompra, data.dataVencimento, data.status);
         ToastAndroid.show("Compra cadastrada com sucesso!", ToastAndroid.SHORT);
         navigation.navigate("Menu");
-
     }
 
     const [status, setStatus] = useState(0);
@@ -100,10 +99,13 @@ export function Cadastro({ navigation }: any) {
                             bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6`}>
                                 <TextInput
                                     className="flex-1 text-white p-4"
-                                    placeholder="Preço do produto"
+                                    placeholder="Preço do produto (ex: 5.0)"
                                     placeholderTextColor="#999999"
                                     value={value}
-                                    onChangeText={onChange}
+                                    onChangeText={(text) => {
+                                        const cleaned = text.replace(/[^\d.]/g, '');
+                                        onChange(cleaned);
+                                    }}
                                     keyboardType='numeric'
                                 />
                                 <MaterialIcons name="attach-money" size={24} color={errors.preco ? '#ef4444' : '#999999'} />

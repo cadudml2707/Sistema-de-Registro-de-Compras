@@ -1,5 +1,3 @@
-import { openDatabaseSync, deleteDatabaseSync } from 'expo-sqlite';
-import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { db } from './db';
 
 export function setupDatabase() {

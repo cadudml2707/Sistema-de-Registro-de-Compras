@@ -16,7 +16,7 @@ export function CardInfo({
   onPress
 }: CardInfoProps & { onPress?: () => void }) {
   const corStatus = status === 1 ? '[#13C782]' : status === 3 ? '[#FB4646]' : '[#262429]';
-  const textoStatus = status === 1 ? 'pago' : 'pagar';
+  const textoStatus = status === 1 ? 'Pago' : 'Pagar';
   const corTexto = status === 2 ? '#13C782' : 'white';
   const corVencimento = status === 1 ? '#13C782' : 'white';
 
@@ -27,7 +27,7 @@ export function CardInfo({
           <FontAwesome5 name="receipt" size={35} color="white" />
           <View>
             <Text className="font-bold text-white text-lg">{nome}</Text>
-            <Text className="text-base text-white">{preco}</Text>
+            <Text className="text-base text-white">R$ {preco}</Text>
             <Text className={`text-sm mt-2`} style={{ color: corVencimento }}>Vencimento: {dataVencimento}</Text>
           </View>
         </View>
