@@ -1,21 +1,16 @@
-import { Text, View, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Alert } from 'react-native';
-import { useEffect, useState } from 'react';
-import { mostraCompra, excluiCompra } from '../models/formularioModel';
-import { formularioValidacao } from '../viewmodels/formularioViewModel';
-import { atualizaCompra } from '../models/formularioModel';
+import { Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { formularioValidacao } from '../viewmodels/yup/formularioValidacao';
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import { editarViewModel } from '../viewmodels/editarViewModel';
 
-export function Editar({ route }: any) {
+export function Editar({ navigation, route }: any) {
 
-    const navigation = useNavigation();
     const compra_id = route.params?.compra_id;
-    const [compra, setCompra] = useState<any>(null);
 
     const {
         control,
@@ -34,42 +29,11 @@ export function Editar({ route }: any) {
         }
     });
 
-    useEffect(() => {
-        async function carregarDados() {
-            if (compra_id) {
-                console.log("Buscando compra ID:", compra_id);
-                const dados = await mostraCompra(compra_id);
-                console.log("Dados retornados:", dados);
-                setCompra(dados);
-            }
-        }
-        carregarDados();
-    }, [compra_id]);
-
-    useEffect(() => {
-        if (compra) {
-            setValue('nome', compra.nome);
-            setValue('descricao', compra.descricao);
-            setValue('preco', compra.preco);
-            setValue('dataCompra', compra.dataCompra);
-            setValue('dataVencimento', compra.dataVencimento);
-            setValue('status', compra.status);
-            setStatus(compra.status);
-        }
-    }, [compra, setValue])
-
-    const onSubmit = async (data: any) => {
-        await atualizaCompra(compra_id, data.nome, data.descricao, data.preco, data.dataCompra, data.dataVencimento, data.status);
-        ToastAndroid.show("Compra atualizada com sucesso!", ToastAndroid.SHORT);
-        navigation.navigate("Menu");
-    }
-
-    const [status, setStatus] = useState(0);
-
-    function handleMudarCor(cor: number) {
-        setStatus(cor);
-        setValue('status', cor);
-    }
+    const { compra, status, handleMudarCor, onSubmit } = editarViewModel({
+        compra_id,
+        navigation,
+        setValue,
+    });
 
 
     if (!compra) {
@@ -236,7 +200,7 @@ export function Editar({ route }: any) {
                 {errors.status && (
                     <Text className="text-red-500 mt-1">{errors.status.message}</Text>
                 )}
-                <TouchableOpacity
+                <TouchableOpacity 
                     onPress={handleSubmit(onSubmit)}
                     className=" items-center justify-center h-16 rounded-xl bg-[#13C782]">
                     <Text className="text-white text-center font-semibold">Salvar</Text>

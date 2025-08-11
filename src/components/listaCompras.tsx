@@ -63,8 +63,7 @@ export function ListaCompras({ navigation }: { navigation: any }) {
                     </TouchableOpacity>
                 </View>
                 {aba === 1 && (
-                    <View className="gap-4 flex-2">
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
+                    <View className="gap-4 flex-2 mt-8">
                         {compras.map((compra) => (
                             <CardInfo
                                 key={compra.id}
@@ -75,15 +74,10 @@ export function ListaCompras({ navigation }: { navigation: any }) {
                                 onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
                             />
                         ))}
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
-
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
-
                     </View>
                 )}
                 {aba === 2 && (
-                    <View className="gap-4 flex-2">
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
+                    <View className="gap-4 flex-2 mt-8">
                         {compras.map((compra) => (
                             compra.status === 1 && (
                                 <CardInfo
@@ -104,8 +98,7 @@ export function ListaCompras({ navigation }: { navigation: any }) {
                     </View>
                 )}
                 {aba === 3 && (
-                    <View className="gap-4">
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
+                    <View className="gap-4 mt-8">
                         {compras.map((compra) => (
                             compra.status === 3 && (
                                 <CardInfo
@@ -126,8 +119,7 @@ export function ListaCompras({ navigation }: { navigation: any }) {
                     </View>
                 )}
                 {aba === 4 && (
-                    <View className="gap-4">
-                        <Text className="mt-8 text-lg" style={{ color: '#A2A2A2' }}>Histórico do dia (data)</Text>
+                    <View className="gap-4 mt-8">
                         {compras.map((compra) => (
                             compra.status === 2 && (
                                 <CardInfo
@@ -138,11 +130,6 @@ export function ListaCompras({ navigation }: { navigation: any }) {
                                     status={compra.status}
                                     onPress={() => navigation.navigate("Visualizar", { compra_id: compra.id })}
                                 />
-                            )
-                        ))}
-                        {compras.map((compra) => (
-                            compra.length === 0 && (
-                                <Text className="text-white text-center mt-6">Nenhuma compra em andamento.</Text>
                             )
                         ))}
                     </View>

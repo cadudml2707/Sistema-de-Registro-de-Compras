@@ -5,8 +5,8 @@ import { testesDb } from "./src/database/testesDb";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Login } from './src/views/loginScreen';
-import { Menu } from './src/views/Menu';
+import { Login } from './src/views/login';
+import { Menu } from './src/views/menu';
 import { Cadastro } from "./src/views/cadastro";
 import { Visualizar } from "./src/views/visualizar";
 import { Editar } from "./src/views/editar";
@@ -36,20 +36,23 @@ export default function App() {
             name="Menu"
             component={Menu}
             options={{
-              title: "Olá, {Adicionar nome}",
+              title: "Olá, Defesa Civil",
               headerStyle: { backgroundColor: "#141416" },
               headerTintColor: '#fff',
               headerBackVisible: false,
             }} />
           <Stack.Screen name="Cadastro" component={Cadastro} options={{
+            title: "Nova Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />
           <Stack.Screen name="Visualizar" component={Visualizar} options={{
+            title: "Ver Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />
           <Stack.Screen name="Editar" component={Editar} options={{
+            title: "Editar Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />
