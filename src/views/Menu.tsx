@@ -12,7 +12,7 @@ export function Menu({ navigation }: any) {
     <View className='flex-1'>
       <ScrollView className='flex-1 bg-[#141416]'>
         <View className="flex-1 bg-[#141416] p-4 gap-6">
-          <Text className='text-2xl font-bold text-red-500 color-white'>Atualizações</Text>
+          <Text className='text-2xl font-bold font-poppins text-red-500 color-white'>Atualizações</Text>
           <View className='flex-row gap-4'>
             <View className='flex-1'>
               <CardPagos />

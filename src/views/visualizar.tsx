@@ -9,22 +9,22 @@ import { visualizarViewModel } from '../viewmodels/visualizarViewModel';
 
 export function Visualizar({ navigation, route }: any) {
 
-    const compra_id = route.params?.compra_id;
-    const [compra, setCompra] = useState<any>(null);
+  const compra_id = route.params?.compra_id;
+  const [compra, setCompra] = useState<any>(null);
 
-    useEffect(() => {
-        async function carregarDados() {
-            if (compra_id) {
-                console.log("Buscando compra ID:", compra_id);
-                const dados = await mostraCompra(compra_id);
-                console.log("Dados retornados:", dados);
-                setCompra(dados);
-            }
-        }
-        carregarDados();
-    }, [compra_id]);
+  useEffect(() => {
+    async function carregarDados() {
+      if (compra_id) {
+        console.log("Buscando compra ID:", compra_id);
+        const dados = await mostraCompra(compra_id);
+        console.log("Dados retornados:", dados);
+        setCompra(dados);
+      }
+    }
+    carregarDados();
+  }, [compra_id]);
 
-    const { handleExcluir, getStatusInfo } = visualizarViewModel({ navigation });
+  const { handleExcluir, getStatusInfo } = visualizarViewModel({ navigation });
 
   if (!compra) {
     return (
@@ -76,11 +76,23 @@ export function Visualizar({ navigation, route }: any) {
             <Ionicons name="calendar-clear" size={24} color="#999999" />
           </View>
         </View>
-        <View>
-          <Text className="text-2xl font-bold text-[#E0E0E0]">Status</Text>
-          <View className="bg-[#262429] border-b border-[#999999] mt-4 rounded-t-xl flex-row items-center h-16 pr-6">
-            <Text className="flex-1 text-white p-4" style={{ color: statusColor }}>
-              {statusText}
+        <View className='flex-row justify-between'>
+          <View
+            className={`${compra.status === 1 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+            <Text style={{ color: compra.status === 1 ? '#13C782' : '#606061' }}>
+              Pago
+            </Text>
+          </View>
+          <View
+            className={`${compra.status === 2 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+            <Text style={{ color: compra.status === 2 ? '#13C782' : '#606061' }}>
+              Andamento
+            </Text>
+          </View>
+          <View
+            className={`${compra.status === 3 ? 'border-[#13C782]' : 'border-[#606061]'} flex-2 border border-[#13C782] items-center justify-center h-14 rounded-xl p-4 `}>
+            <Text style={{ color: compra.status === 3 ? '#13C782' : '#606061' }}>
+              Atrasado
             </Text>
           </View>
         </View>

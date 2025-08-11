@@ -200,7 +200,7 @@ export function Editar({ navigation, route }: any) {
                 {errors.status && (
                     <Text className="text-red-500 mt-1">{errors.status.message}</Text>
                 )}
-                <TouchableOpacity
+                <TouchableOpacity 
                     onPress={handleSubmit(onSubmit)}
                     className=" items-center justify-center h-16 rounded-xl bg-[#13C782]">
                     <Text className="text-white text-center font-semibold">Salvar</Text>

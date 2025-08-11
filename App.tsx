@@ -36,20 +36,23 @@ export default function App() {
             name="Menu"
             component={Menu}
             options={{
-              title: "Olá, {Adicionar nome}",
+              title: "Olá, Defesa Civil",
               headerStyle: { backgroundColor: "#141416" },
               headerTintColor: '#fff',
               headerBackVisible: false,
             }} />
           <Stack.Screen name="Cadastro" component={Cadastro} options={{
+            title: "Nova Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />
           <Stack.Screen name="Visualizar" component={Visualizar} options={{
+            title: "Ver Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />
           <Stack.Screen name="Editar" component={Editar} options={{
+            title: "Editar Compra",
             headerStyle: { backgroundColor: "#141416" },
             headerTintColor: '#fff',
           }} />

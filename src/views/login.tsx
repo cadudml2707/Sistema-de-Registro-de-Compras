@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TouchableOpacity, Text, View, TextInput } from 'react-native';
+import { TouchableOpacity, Text, View, TextInput, KeyboardAvoidingView } from 'react-native';
 import { validaUsuario } from '../models/loginModel';
 import { loginValidacao } from '../viewmodels/yup/loginValidacao';
 
@@ -71,6 +71,7 @@ export function Login({ navigation }: any) {
                     <Text className="text-white text-center font-semibold">Entrar</Text>
                 </TouchableOpacity>
             </View>
+            <Text className='text-center mt-8' style={{ color: "#606061"}}>Defesa Civil do Amazonas</Text>
         </View>
     );
 }
