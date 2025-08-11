@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Login } from './src/views/login';
-import { Menu } from './src/views/menu';
+import { Menu } from './src/views/Menu';
 import { Cadastro } from "./src/views/cadastro";
 import { Visualizar } from "./src/views/visualizar";
 import { Editar } from "./src/views/editar";
